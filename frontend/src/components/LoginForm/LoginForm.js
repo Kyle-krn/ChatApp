@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-
+import CSRFToken from "../CSRFToken/CSRFToken";
 
 export const LoginForm = () => {
     const [login, setLogin] = useState("")
@@ -12,6 +12,7 @@ export const LoginForm = () => {
         <div className="loginForm">
             <span>Авторизация</span>
             <form onSubmit={handleSubmitForm}>
+                <CSRFToken />
                 <input placeholder="Логин"  
                        onChange={(e) => {setLogin(e.target.value)}}
                        value={login}

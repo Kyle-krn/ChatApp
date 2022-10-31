@@ -1,28 +1,24 @@
 import React, { Component } from "react";
-import { render } from "react-dom";
 import {
   BrowserRouter,
   Routes,
   Route,
 } from 'react-router-dom';
 import { LoginPage } from "./pages/LoginPage";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
+const App = () => {
     return (
-      <BrowserRouter>
-        <Routes>
-            <Route path='/' element={<div>home</div>}/>  
-            <Route path='/login' element={<LoginPage />}/>  
-          </Routes>
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Routes>
+              <Route path='/' element={<div>home</div>}/>  
+              <Route path='/login' element={<LoginPage />}/>  
+            </Routes>
+        </BrowserRouter>
+      </Provider>
     );
   }
-}
 
-// const appDiv = document.getElementById("app");
-// render(<App />, appDiv);
+  export default App;
