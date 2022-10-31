@@ -26,3 +26,12 @@ class GetCSRFToken(APIView):
     
     def get(self, request, format=None):
         return Response({'success': 'CSRF cookie set'})
+    
+
+class LogoutView(APIView):
+    def post(self, request, format=None):
+        try:
+            auth.logout(request)
+            return Response({ 'success': 'Loggout Out' })
+        except:
+            return Response({ 'error': 'Something went wrong when logging out' })
