@@ -47,6 +47,9 @@ const loginSlice = createSlice({
             state.accessToken = null
             state.isLoading = false
             state.error = null
+        },
+        unsetError(state) {
+            state.error = null
         }
     },
     extraReducers: {
@@ -63,4 +66,4 @@ const loginSlice = createSlice({
 })
 
 export default loginSlice.reducer;
-export const { loginUser, logoutUser } = loginSlice.actions;
+export const { loginUser, logoutUser, unsetError } = loginSlice.actions;

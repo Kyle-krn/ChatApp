@@ -4,7 +4,7 @@ from .serializers import RoomSerializer
 
 
 class ChatRoomViewSet(ModelViewSet):
-    queryset = ChatRoom.objects.all()
+    queryset = ChatRoom.objects.all().order_by('created_at')
     serializer_class = RoomSerializer
     http_method_names = ['get', 'post']
     

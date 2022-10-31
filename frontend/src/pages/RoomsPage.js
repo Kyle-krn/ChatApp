@@ -16,7 +16,7 @@ export const RoomsPage = () => {
     
     return (
         <div className='roomPage'>
-            <RoomForm />
+            <RoomForm isAuthenticated={isAuthenticated}/>
         </div>
     )
 }

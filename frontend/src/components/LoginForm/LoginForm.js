@@ -3,16 +3,19 @@ import CSRFToken from "../CSRFToken/CSRFToken";
 import { APILogin } from "../../redux/auth/loginReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { LoadingButton } from "../LoadingButton/LoadingButton";
+import { unsetError } from "../../redux/auth/loginReducer";
+
 
 export const LoginForm = () => {
     const [formData, setFormData] = useState({
         username: '',
         password: '',
     });
-    const {isLoading, error} = useSelector(state => state.authData.login)
+    const {isLoading, error, roomsArray} = useSelector(state => state.authData.login)
     const dispatch = useDispatch();
 
     const hadnleOnChange = e => {
+        !!error && dispatch(unsetError())
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
@@ -22,14 +25,11 @@ export const LoginForm = () => {
     const handleSubmitForm = async(e) => {
         e.preventDefault();
         dispatch(APILogin(formData));
-    }
-
-    useEffect(()=>{
-        !!error && setFormData({
+        setFormData({
             username: '',
             password: ''
         })
-    }, [error])
+    }
 
     return (
         <div className="form loginForm">
