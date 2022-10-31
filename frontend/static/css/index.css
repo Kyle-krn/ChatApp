@@ -46,6 +46,12 @@ body {
     height: 100vh;
 }
 
+.roomPage {
+    background-color: #F4F4F4;
+    width: 100vw;
+    height: 100vh;
+}
+
 @media (max-width: 1440px) {
     .loginPage {
         background-size: unset;
@@ -54,7 +60,7 @@ body {
 
 
 
-.loginForm {
+.form {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -63,19 +69,36 @@ body {
     text-align: center;
     box-shadow: 0px 40px 30px 10px rgba(0, 0, 0, 0.25), inset 0px 0px 0px 1px #E5E5EA;
     border-radius: 10px;
+    width: 546px;
 }
 
-.loginForm span {
+@media (max-width: 834px) {
+    .form {
+        width: 456px;
+    }
+}
+
+@media (max-width: 500px) {
+    .form {
+        width: 380px;
+    }
+}
+
+.form.roomForm {
+    box-shadow: inset 0px 0px 0px 1px #E5E5EA;
+}
+
+
+
+.form span {
     display: block;
     font-weight: 400;
     font-size: 26px;
-    /* padding-top: 30px; */
-    /* line-height: 18px; */
     padding: 26px 0 24px 0;
     border-bottom: 1px solid #E5E5EA;
 }
 
-.loginForm form {
+.form form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -84,19 +107,30 @@ body {
 
 }
 
-.loginForm form input {
-    width: 486px;
-    /* height: 48px; */
+input {
+    width: 100%;
     border: 1px solid #E5E5E5;
     border-radius: 5px;
     font-size: 14px;
     padding: 15px;
     transition: border 500ms linear;
 }
-
-.loginForm form input.error {
+/* .form.loginForm form  */
+input.error {
     border: 1px solid red;
     animation: shake 0.5s;
+}
+
+div.inputWithBtn{
+    position: relative;
+    width: 100%;
+    /* display: flex; */
+}
+
+div.inputWithBtn button{
+    position: absolute;
+    right: 4.5px;
+    top: 5.5px;
 }
 
 
@@ -113,17 +147,7 @@ body {
     background: #666666;
 }
 
-@media (max-width: 834px) {
-    .loginForm form input {
-        width: 400px;
-    }
-}
 
-@media (max-width: 500px) {
-    .loginForm form input {
-        width: 310px;
-    }
-}
 
 
 
@@ -146,8 +170,4 @@ body {
     position: relative;
     top: -32px;
     left: 23px;
-    /* width: 100px; */
-    /* height: 100px; */
-    /* margin: 20px; */
-    /* display:none; */
   }

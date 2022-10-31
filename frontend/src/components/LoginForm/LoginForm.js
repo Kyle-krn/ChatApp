@@ -32,7 +32,7 @@ export const LoginForm = () => {
     }, [error])
 
     return (
-        <div className="loginForm">
+        <div className="form loginForm">
             <span>Авторизация</span>
             <form onSubmit={handleSubmitForm}>
                 <CSRFToken />

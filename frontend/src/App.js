@@ -10,6 +10,8 @@ import store from "./redux/store";
 import { useEffect } from "react";
 import { APICheckAuth } from "./redux/auth/loginReducer";
 import { useDispatch } from "react-redux";
+import { RoomsPage } from "./pages/RoomsPage";
+
 
 const Layout = ({children}) => {
   const dispatch = useDispatch();
@@ -23,13 +25,14 @@ const Layout = ({children}) => {
   )
 }
 
+
 const App = () => {
     return (
       <Provider store={store}>
         <BrowserRouter>
           <Layout>
             <Routes>
-                  <Route path='/' element={<div>home</div>}/>  
+                  <Route path='/' element={<RoomsPage />}/>  
                   <Route path='/login' element={<LoginPage />}/>  
               </Routes>
           </Layout>
