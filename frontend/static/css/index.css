@@ -1,0 +1,114 @@
+/*Обнуление*/
+*{
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+*,*:before,*:after{
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+:focus,:active{outline: none;}
+a:focus,a:active{outline: none;}
+nav,footer,header,aside{display: block;}
+html,body{
+	height: 100%;
+	width: 100%;
+	font-size: 100%;
+	line-height: 1;
+	font-size: 14px;
+	-ms-text-size-adjust: 100%;
+	-moz-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+}
+input,button,textarea{font-family:inherit;}
+input::-ms-clear{display: none;}
+button{cursor: pointer;}
+button::-moz-focus-inner {padding:0;border:0;}
+a, a:visited{text-decoration: none;}
+a:hover{text-decoration: none;}
+ul li{list-style: none;}
+img{vertical-align: top;}
+h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}
+a{color:black}
+/*--------------------*/
+
+body {
+    font-family: "Open Sans";
+}
+
+.loginPage {
+    background-image: url("../img/background.png");
+    background-size: 100% 100%;
+    background-position: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+@media (max-width: 1440px) {
+    .loginPage {
+        background-size: unset;
+    }
+}
+
+
+
+.loginForm {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #FFFFFF;
+    text-align: center;
+    box-shadow: 0px 40px 30px 10px rgba(0, 0, 0, 0.25), inset 0px 0px 0px 1px #E5E5EA;
+    border-radius: 10px;
+}
+
+.loginForm span {
+    display: block;
+    font-weight: 400;
+    font-size: 26px;
+    /* padding-top: 30px; */
+    /* line-height: 18px; */
+    padding: 26px 0 24px 0;
+    border-bottom: 1px solid #E5E5EA;
+}
+
+.loginForm form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px;
+    padding: 30px 30px 40px 30px;
+
+}
+
+.loginForm form input {
+    width: 486px;
+    /* height: 48px; */
+    border: 1px solid #E5E5E5;
+    border-radius: 5px;
+    font-size: 14px;
+    padding: 15px;
+}
+
+.loginForm form button {
+    background: #5D5FEF;
+    border-radius: 5px;
+    color: #FFFFFF;
+    width: 102px;
+    height: 38px;
+}
+
+@media (max-width: 834px) {
+    .loginForm form input {
+        width: 400px;
+    }
+}
+
+@media (max-width: 500px) {
+    .loginForm form input {
+        width: 310px;
+    }
+}
