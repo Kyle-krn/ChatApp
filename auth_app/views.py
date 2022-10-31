@@ -35,3 +35,18 @@ class LogoutView(APIView):
             return Response({ 'success': 'Loggout Out' })
         except:
             return Response({ 'error': 'Something went wrong when logging out' })
+        
+
+class CheckAuthenticatedView(APIView):
+    def get(self, request, format=None):
+        user = self.request.user
+
+        try:
+            isAuthenticated = user.is_authenticated
+
+            if isAuthenticated:
+                return Response({ 'isAuthenticated': 'success' })
+            else:
+                return Response({ 'isAuthenticated': 'error' })
+        except:
+            return Response({ 'error': 'Something went wrong when checking authentication status' })

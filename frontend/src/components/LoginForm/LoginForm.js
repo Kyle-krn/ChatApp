@@ -5,8 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { LoadingButton } from "../LoadingButton/LoadingButton";
 
 export const LoginForm = () => {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
     const [formData, setFormData] = useState({
         username: '',
         password: '',
