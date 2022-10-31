@@ -38,10 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
+    'channels',
     'auth_app',
     'chat_app',
     'frontend',
-    'corsheaders'
+    
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -79,6 +81,15 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'IlStudioChat.wsgi.application'
+ASGI_APPLICATION = "IlStudioChat.asgi.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 
 # Database
