@@ -6,7 +6,7 @@ User = get_user_model()
 
 
 class LoginSerializers(serializers.Serializer):
-    email = serializers.CharField(max_length=255)
+    username = serializers.CharField(max_length=255)
     password = serializers.CharField(
         label=_("Password"),
         style={'input_type': 'password'},
@@ -16,7 +16,7 @@ class LoginSerializers(serializers.Serializer):
     )
 
     def validate(self, data):
-        username = data.get('email')
+        username = data.get('username')
         password = data.get('password')
         
         if username and password:

@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react';
+import { axiosInstance } from '../../api/instance';
+import api from './../../api/index';
 import axios from 'axios';
 
 const CSRFToken = () => {
@@ -22,15 +24,13 @@ const CSRFToken = () => {
     useEffect(()=>{
         const fetchData = async () => {
             try {
-                const res = await axios.get(`http://localhost:8000/auth/csrf_cookie`)
-                console.log(res)
+                await api.auth.getCSRFToken();
             } catch (error) {
                 console.log(error)
             }
         };
         fetchData();
-        console.log(getCookie('csrftoken'))
-        // setCsrftoken(getCookie('csrftoken'));
+        setCsrftoken(getCookie('csrftoken'));
     }, [])
 
     return (
