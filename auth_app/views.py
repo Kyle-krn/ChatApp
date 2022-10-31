@@ -25,16 +25,16 @@ class GetCSRFToken(APIView):
     permission_classes = (permissions.AllowAny,)
     
     def get(self, request, format=None):
-        return Response({'success': 'CSRF cookie set'})
+        return Response({'success': 'CSRF cookie set'}, status=status.HTTP_200_OK)
     
 
 class LogoutView(APIView):
     def post(self, request, format=None):
         try:
             auth.logout(request)
-            return Response({ 'success': 'Loggout Out' })
+            return Response({ 'success': 'Loggout Out' }, status=status.HTTP_200_OK)
         except:
-            return Response({ 'error': 'Something went wrong when logging out' })
+            return Response({ 'error': 'Something went wrong when logging out' }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
 
 class CheckAuthenticatedView(APIView):
@@ -45,8 +45,8 @@ class CheckAuthenticatedView(APIView):
             isAuthenticated = user.is_authenticated
 
             if isAuthenticated:
-                return Response({ 'isAuthenticated': 'success' })
+                return Response({ 'isAuthenticated': 'success' }, status=status.HTTP_200_OK)
             else:
-                return Response({ 'isAuthenticated': 'error' })
+                return Response({ 'isAuthenticated': 'error' }, status=status.HTTP_401_UNAUTHORIZED)
         except:
-            return Response({ 'error': 'Something went wrong when checking authentication status' })
+            return Response({ 'error': 'Something went wrong when checking authentication status' }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

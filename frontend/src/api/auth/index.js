@@ -4,3 +4,4 @@ import { axiosInstance } from "../instance";
 
 export const getCSRFToken = () => axiosInstance.get(Endpoints.AUTH.CSRF_TOKEN);
 export const login = (data) => axiosInstance.post(Endpoints.AUTH.LOGIN, data);
+export const checkAuthenticated = () => axiosInstance.get(Endpoints.AUTH.CHECK_AUTH)

@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../../api";
 
 export const APILogin = createAsyncThunk(
-    'auth/login',
+    'auth/APILogin',
     async function ({username, password}, {rejectWithValue, dispatch}) {
         try {
             await api.auth.login({username, password})
@@ -13,6 +13,18 @@ export const APILogin = createAsyncThunk(
             } else {
                 return rejectWithValue("Server error")
             }
+        }
+    }
+)
+
+export const APICheckAuth = createAsyncThunk(
+    'auth/APICheckAuth',
+    async function(_, {rejectWithValue, dispatch}){
+        try {
+            const res = await api.auth.checkAuthenticated();
+            dispatch(loginUser())
+        } catch (error) {
+            
         }
     }
 )
