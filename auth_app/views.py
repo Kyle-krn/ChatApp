@@ -16,7 +16,7 @@ class LoginView(APIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         auth.login(request, user)
-        return Response({"status": status.HTTP_200_OK})        
+        return Response({"user_id": user.id}, status=status.HTTP_200_OK)        
 
 
 @method_decorator(ensure_csrf_cookie, name='dispatch')
@@ -44,7 +44,7 @@ class CheckAuthenticatedView(APIView):
             isAuthenticated = user.is_authenticated
 
             if isAuthenticated:
-                return Response({ 'isAuthenticated': 'success' }, status=status.HTTP_200_OK)
+                return Response({ 'user_id': user.id }, status=status.HTTP_200_OK)
             else:
                 return Response({ 'isAuthenticated': 'error' }, status=status.HTTP_401_UNAUTHORIZED)
         except:

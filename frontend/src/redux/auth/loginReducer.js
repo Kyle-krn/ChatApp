@@ -5,8 +5,8 @@ export const APILogin = createAsyncThunk(
     'auth/APILogin',
     async function ({username, password}, {rejectWithValue, dispatch}) {
         try {
-            await api.auth.login({username, password})
-            dispatch(loginUser())
+            const res = await api.auth.login({username, password})
+            dispatch(loginUser(res.data.user_id))
         } catch (error) {
             if (error.response.status === 400) {
                 return rejectWithValue("Неверный логин или пароль")
@@ -22,7 +22,7 @@ export const APICheckAuth = createAsyncThunk(
     async function(_, {rejectWithValue, dispatch}){
         try {
             const res = await api.auth.checkAuthenticated();
-            dispatch(loginUser())
+            dispatch(loginUser(res.data.user_id))
         } catch (error) {
             
         }
@@ -42,6 +42,7 @@ const loginSlice = createSlice({
             state.isLoading = false
             state.error = null
             state.isAuthenticated = true
+            state.userId = action.payload
         },
         logoutUser(state) {
             state.accessToken = null
