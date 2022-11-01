@@ -1,0 +1,29 @@
+.chatPage_header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 68px;
+    border-bottom: 1px solid #E5E5EA;
+}
+
+.chatPage_header .header_text{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.chatPage_header .header_text span:nth-child(1){
+    color: #2C2C2E;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 18px;
+    
+}
+
+.chatPage_header .header_text span:nth-child(2){
+    color: #666668;
+    font-size: 12px;
+}
+

@@ -4,6 +4,7 @@ import CSRFToken from "../CSRFToken/CSRFToken";
 import { LoadingButton } from "../LoadingButton/LoadingButton";
 import { setError } from "../../redux/chat/roomReducers";
 import arrowSVG from './../../../static/img/arrow.svg';
+import { NavLink } from "react-router-dom";
 
 export const RoomForm = ({connectionStatus, handleCreateRoom}) => {
     const [title, setTitle] = useState("");
@@ -26,7 +27,7 @@ export const RoomForm = ({connectionStatus, handleCreateRoom}) => {
     return (
         <div className="form roomForm">
             <span>Выберите / создайте чат</span>
-            <div className="roomList">
+            <div className="roomList scroll">
                 {roomsArray.map(room => <RoomItem key={room.id} id={room.id} title={room.title}/>)}
             </div>
             <form onSubmit={handleSubmitForm}>
@@ -48,9 +49,11 @@ export const RoomForm = ({connectionStatus, handleCreateRoom}) => {
 
 export const RoomItem = ({id, title}) => {
     return (
-        <div className="roomItem">
-            {title}
-            <img src={arrowSVG}/>
-        </div>
+        <NavLink className={NavData => NavData.isActive ? style.active : ''} to={`/room/${id}`}>
+            <div className="roomItem">
+                {title}
+                <img src={arrowSVG}/>
+            </div>
+        </NavLink>
     )
 }

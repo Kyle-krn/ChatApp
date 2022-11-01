@@ -6,7 +6,10 @@ import { useSelector } from "react-redux";
 export const LoginPage = () => {
     const {isAuthenticated} = useSelector(state => state.authData.login)
     const navigate = useNavigate();
-   
+    
+    useEffect(()=>{
+        document.title = 'Login';
+    },[])
 
     useEffect(()=>{
         isAuthenticated && navigate('/')

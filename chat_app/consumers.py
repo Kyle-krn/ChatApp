@@ -1,13 +1,10 @@
-# chat/consumers.py
-from ast import Raise
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from django.contrib.auth.models import AnonymousUser
-# from channels.db import database_sync_to_async
 from .models import ChatRoom
 from channels.db import database_sync_to_async
 
-class RoomConsumer(AsyncWebsocketConsumer):
+class RoomsConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.room_group_name = 'rooms'
 
@@ -83,3 +80,35 @@ class RoomConsumer(AsyncWebsocketConsumer):
             raise ValueError()
         return ChatRoom.objects.create(title=title, creator=creator)
         
+        
+
+class ChatRoomConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        if isinstance(self.scope['user'], AnonymousUser):
+            return await self.close()
+        
+        self.room_id = self.scope['url_route']['kwargs']['room_id']
+        self.room_group_name = 'room_%s' % self.room_id
+        self.room = await self.get_room()
+        
+        await self.channel_layer.group_add(
+            self.room_group_name,
+            self.channel_name
+        )
+        
+        await self.accept()
+        self.room.online.add(self.scope['user'])
+    
+
+        
+    async def disconnect(self, close_code):
+        await self.channel_layer.group_discard(
+            self.room_group_name,
+            self.channel_name
+        )
+        self.room.online.remove(self.scope['user'])
+
+        
+    @database_sync_to_async
+    def get_room(self):
+        return ChatRoom.objects.get(id=self.room_id)

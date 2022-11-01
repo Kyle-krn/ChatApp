@@ -58,7 +58,14 @@ body {
     }
 }
 
-
+.chatPage {
+    max-width: 546px;
+    margin: 0 auto;
+    border: 1px solid #E5E5EA;
+    display: flex;
+    flex-direction: column;
+    height: 99vh;
+}
 
 .form {
     position: absolute;
@@ -115,7 +122,8 @@ input {
     padding: 15px;
     transition: border 500ms linear;
 }
-/* .form.loginForm form  */
+
+
 input.error {
     border: 1px solid red;
     animation: shake 0.5s;
@@ -153,8 +161,6 @@ div.inputWithBtn button{
     display: flex;
     align-items: center;
     background-color: #7879F1;
-    /* height: 48px;
-    line-height: 48px; */
     font-size: 14px;
     padding: 15px;
     border-radius: 5px;
@@ -164,7 +170,7 @@ div.inputWithBtn button{
 
 .roomItem img {
     position: absolute;
-    right: 10px;
+    right: 22px;
 }
 
 .roomList {
@@ -179,12 +185,12 @@ div.inputWithBtn button{
 }
 
 
-.roomList::-webkit-scrollbar {
+.scroll::-webkit-scrollbar {
     width: 6px;
     background-color: #F4F4F4;
 }
 
-.roomList::-webkit-scrollbar-thumb {
+.scroll::-webkit-scrollbar-thumb {
     background-color: #7879F1;    
     border-radius: 20px;
     border: 3px solid #7879F1;
@@ -210,3 +216,5 @@ div.inputWithBtn button{
     top: -32px;
     left: 23px;
   }
+
+

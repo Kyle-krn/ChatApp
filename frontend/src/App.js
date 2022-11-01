@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import { APICheckAuth } from "./redux/auth/loginReducer";
 import { useDispatch } from "react-redux";
 import { RoomsPage } from "./pages/RoomsPage";
-
+import { ChatPage } from "./pages/ChatPage";
 
 const Layout = ({children}) => {
   const dispatch = useDispatch();
@@ -34,6 +34,7 @@ const App = () => {
             <Routes>
                   <Route path='/' element={<RoomsPage />}/>  
                   <Route path='/login' element={<LoginPage />}/>  
+                  <Route path='/room/:id' element={<ChatPage />}/>  
               </Routes>
           </Layout>
         </BrowserRouter>

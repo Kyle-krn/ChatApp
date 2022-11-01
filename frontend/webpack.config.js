@@ -22,7 +22,8 @@ module.exports = {
         loader: 'file-loader', // this need file-loader
         options: {
         limit: 50000
-      }}}
+      }}},
+      { test: /\.css$/, use: [ 'style-loader', 'css-loader' ] }
     ],
   },
   optimization: {

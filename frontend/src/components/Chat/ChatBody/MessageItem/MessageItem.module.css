@@ -1,0 +1,93 @@
+.messageItem {
+    display: inline-block;
+    position: relative;
+    
+    flex-grow: 0;
+    flex-shrink: 0;
+    
+    min-height: 39px;
+    max-width: 320px;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 6px 0 0 8px;
+    overflow-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+}
+
+.messageItem.myMessage {
+    align-self: flex-end;
+    background-color: #5D5FEF;
+    border-radius: 6px 0px 6px 6px;
+    color: #FFFFFF;
+}
+
+.messageItem.myMessage .username{
+    display: none;
+}
+
+.messageItem .messageText {
+    padding-right: 47px;
+}
+
+.bubbleImg {
+    position: absolute;
+    top: 0px;
+}
+
+.messageItem.myMessage .bubbleImg {
+    right: -9px;
+}
+
+.messageItem.otherMessage .bubbleImg {
+    left: -9px;
+}
+
+.messageItem.otherMessage{
+    align-self: flex-start;
+    background-color: #F2F2F7;
+    border-radius: 0px 6px 6px 6px;
+}
+
+.messageItem .username {
+    font-weight: 600;
+}
+
+.messageStatus {
+    display: flex;
+    align-items: flex-start;
+    justify-content: right;
+    padding-bottom: 4px;
+}
+
+
+.messageItem.myMessage .messageStatus {
+    padding-right: 25px;
+} 
+
+.messageItem.otherMessage .messageStatus {
+    padding-right: 5px;
+} 
+
+.messageTime {
+    font-weight: 300;
+}
+
+.messageCheck {
+    margin-left: 4px;
+    position: relative;
+    display: block;
+}
+
+.messageItem.otherMessage .messageCheck{
+    display: none;
+}
+
+.messageCheck img {
+    position: absolute;
+    top: 5px;
+}
+
+.messageCheck img:nth-child(2){
+    left: 5px;
+}

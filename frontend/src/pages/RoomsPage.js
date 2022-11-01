@@ -23,8 +23,6 @@ export const RoomsPage = () => {
         [ReadyState.CLOSED]: 'Closed',
         [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
       }[readyState];
-
-    // console.log(connectionStatus)
     
     useEffect(()=>{
         if (lastMessage !== null) {
