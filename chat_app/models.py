@@ -32,3 +32,15 @@ class ChatRoom(models.Model):
     class Meta:
         db_table = 'chat_room'
         
+        
+class Message(models.Model):
+    user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    room = models.ForeignKey(to=ChatRoom, on_delete=models.CASCADE)
+    message = models.CharField(max_length=512)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user.username}: {self.message} [{self.created_at}]'
+
+    class Meta:
+        db_table = 'messages'
