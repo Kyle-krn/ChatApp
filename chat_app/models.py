@@ -34,9 +34,10 @@ class ChatRoom(models.Model):
         
         
 class Message(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False) 
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     room = models.ForeignKey(to=ChatRoom, on_delete=models.CASCADE)
-    message = models.CharField(max_length=512)
+    message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

@@ -1,7 +1,8 @@
 import json
+import uuid
 from channels.generic.websocket import AsyncWebsocketConsumer
 from django.contrib.auth.models import AnonymousUser
-from .models import ChatRoom
+from .models import ChatRoom, Message
 from channels.db import database_sync_to_async
 
 class RoomsConsumer(AsyncWebsocketConsumer):
@@ -85,20 +86,77 @@ class RoomsConsumer(AsyncWebsocketConsumer):
 class ChatRoomConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         if isinstance(self.scope['user'], AnonymousUser):
+            await self.accept()
             return await self.close()
         
         self.room_id = self.scope['url_route']['kwargs']['room_id']
         self.room_group_name = 'room_%s' % self.room_id
-        self.room = await self.get_room()
+        try:
+            self.room = await self.get_room()
+        except ChatRoom.DoesNotExist:
+            self.room = None
+            await self.accept()
+            await self.send(text_data=json.dumps(
+                {
+                    'type': 'chat_not_found',
+                }
+            ))
+            return await self.close()
+
+        
+        
+        
+        await self.connect_user_to_room_db()
         
         await self.channel_layer.group_add(
             self.room_group_name,
             self.channel_name
         )
-        
         await self.accept()
-        self.room.online.add(self.scope['user'])
-    
+        
+        count = await self.count_user_online()
+        
+        await self.send(text_data=json.dumps(
+            {
+                'type': 'connected_to_chat',
+                'count_online': count,
+                'title_room': self.room.title,
+                'messages': []
+            }
+        )
+        )
+        
+        await self.channel_layer.group_send(
+                                    self.room_group_name,
+                                    {
+                                        'type': 'join_in_room',
+                                        'id': str(uuid.uuid4()),
+                                        'user_id': self.scope['user'].id,
+                                        'username': self.scope['user'].username
+                                    }
+                                )
+        
+        
+    async def receive(self, text_data):
+        
+        data_json = json.loads(text_data)
+        if 'type' not in data_json:
+            return
+        elif data_json['type'] == 'newMessage':
+            message = await self.create_message(data_json['message']) 
+            await self.channel_layer.group_send(
+                            self.room_group_name,
+                            {
+                                'type': 'new_message',
+                                'id': str(message.id),
+                                'message': message.message,
+                                'created_at': str(message.created_at),
+                                'user_id': message.user_id,
+                                'username': self.scope['user'].username
+                            }
+                        )
+        
+
 
         
     async def disconnect(self, close_code):
@@ -106,9 +164,84 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
             self.room_group_name,
             self.channel_name
         )
-        self.room.online.remove(self.scope['user'])
+        
+        if self.room:
+            await self.disconnect_user_to_room_db()
+        
+        await self.channel_layer.group_send(
+                            self.room_group_name,
+                            {
+                                'type': 'leave_in_room',
+                                'id': str(uuid.uuid4()),
+                                'user_id': self.scope['user'].id,
+                                'username': self.scope['user'].username
+                            }
+                        )
+
+
+
+
+
+    async def join_in_room(self, event: dict):
+        await self.send(text_data=json.dumps(
+            {
+                'type': 'join_in_room',
+                'id': event['id'],
+                'user': {
+                    'user_id': event['user_id'],
+                    'username': event['username']
+                }
+            }
+        )
+        )
+
+    async def leave_in_room(self, event: dict):
+        await self.send(text_data=json.dumps(
+            {
+                'type': 'leave_in_room',
+                'id': event['id'],
+                'user': {
+                    'user_id': event['user_id'],
+                    'username': event['username']
+                }
+            }
+        )
+        )
+        
+    async def new_message(self, event: dict):
+        await self.send(text_data=json.dumps(
+            {
+                'type': 'new_message',
+                'message': {
+                    'id': event['id'],
+                    'message': event['message'],
+                    'created_at': event['created_at'],
+                    'user_id': event['user_id'],
+                    'username': event['username']
+                }
+            }
+        ))
+        
 
         
     @database_sync_to_async
     def get_room(self):
         return ChatRoom.objects.get(id=self.room_id)
+    
+    @database_sync_to_async
+    def connect_user_to_room_db(self):
+        self.room.online.add(self.scope['user'])
+    
+    @database_sync_to_async
+    def disconnect_user_to_room_db(self):
+        self.room.online.remove(self.scope['user'])
+    
+    @database_sync_to_async
+    def count_user_online(self):
+        return self.room.get_online_count()
+
+    @database_sync_to_async
+    def create_message(self, message):
+        return Message.objects.create(room=self.room, message=message, user=self.scope['user'])
+        # return self.room.get_online_count()
+    

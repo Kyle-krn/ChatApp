@@ -17,21 +17,18 @@ const chatRoomSlice = createSlice({
         setError(state, action) {
             state.error = action.payload
         },
-        setChatTitle(state, action){
-            state.chatTitle = action.payload
-        },
-        setUsersOnlineCount(state, action) {
-            state.usersOnlineCount = action.payload
-        },
-        setMessagesArray(state, action) {
-            state.messagesArray = action.payload
+        initChatData(state, action) {
+            state.chatTitle = action.payload.title_room
+            state.usersOnlineCount = action.payload.count_online
+            state.messagesArray = action.payload.messages
         },
         appendMessage(state, action){
-            state.messagesArray.push(action.push)
-        }
+            state.messagesArray.push(action.payload)
+        },
+
     }
     
 })
 
 export default chatRoomSlice.reducer;
-export const { setIsLoading ,setError ,setChatTitle ,setUsersOnlineCount ,setMessagesArray ,appendMessage } = chatRoomSlice.actions;
+export const { setIsLoading ,setError ,initChatData ,appendMessage } = chatRoomSlice.actions;

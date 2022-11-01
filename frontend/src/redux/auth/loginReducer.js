@@ -24,7 +24,7 @@ export const APICheckAuth = createAsyncThunk(
             const res = await api.auth.checkAuthenticated();
             dispatch(loginUser(res.data.user_id))
         } catch (error) {
-            
+            return rejectWithValue()
         }
     }
 )
@@ -36,6 +36,7 @@ const loginSlice = createSlice({
         isLoading: false,
         error: null,
         userId: null,
+        checkAuth: false,
     },
     reducers: {
         loginUser(state, action) {
@@ -43,6 +44,7 @@ const loginSlice = createSlice({
             state.error = null
             state.isAuthenticated = true
             state.userId = action.payload
+            state.checkAuth = true
         },
         logoutUser(state) {
             state.accessToken = null
@@ -61,6 +63,9 @@ const loginSlice = createSlice({
         [APILogin.rejected]: (state, action) => {
             state.isLoading = false
             state.error = action.payload
+        },
+        [APICheckAuth.rejected]: (state) => {
+            state.checkAuth = true
         }
     }
     

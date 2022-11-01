@@ -1,5 +1,13 @@
 input.chat_input {
     border-radius: 0;
+    border: none;
+    /* background-color: red; */
+    width: 86%;
+    /* height: 100%; */
+}
+
+.chatInputBlock {
+    border: 1px solid #E5E5E5;
 }
 
 .airplaneImg {
@@ -7,8 +15,9 @@ input.chat_input {
     right: -20px;
 }
 
-.chatInput button {
+.chatInputBlock button {
     background-color: #FFF;
-    height: 48px;
+    height: 45px;
     width: 72px;
 }
+

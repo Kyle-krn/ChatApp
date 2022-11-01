@@ -2,10 +2,10 @@ import React from "react";
 import styles from './UserJoinItem.module.css';
 
 
-export const UserJoinItem = () => {
+export const UserJoinItem = ({username, type},) => {
     return (
         <div className={styles.userJoin}>
-            Пользователь #1 вошел в чат
+            {username} {type === 'join_in_room'? "вошел в чат": "вышел из чата"}
         </div>
     )
 }
