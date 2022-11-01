@@ -13,6 +13,21 @@ class ChatRoom(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    online = models.ManyToManyField(to=settings.AUTH_USER_MODEL, blank=True)
+
+    def get_online_count(self):
+        return self.online.count()
+
+    def join(self, user):
+        self.online.add(user)
+        self.save()
+
+    def leave(self, user):
+        self.online.remove(user)
+        self.save()
+
+    def __str__(self):
+        return f'{self.title} ({self.get_online_count()})'
     
     class Meta:
         db_table = 'chat_room'
