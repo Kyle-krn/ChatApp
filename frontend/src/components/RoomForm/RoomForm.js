@@ -49,7 +49,7 @@ export const RoomForm = ({connectionStatus, handleCreateRoom}) => {
 
 export const RoomItem = ({id, title}) => {
     return (
-        <NavLink className={NavData => NavData.isActive ? style.active : ''} to={`/room/${id}`}>
+        <NavLink to={`/room/${id}`}>
             <div className="roomItem">
                 {title}
                 <img src={arrowSVG}/>

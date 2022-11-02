@@ -1,6 +1,7 @@
 import React, {useRef, useState} from "react";
 import airplaneSVG from './../../../../static/img/paper-airplane.svg'
 import styles from './ChatInput.module.css';
+import { v4 as uuidv4 } from 'uuid';
 
 
 export const ChatInput = ({handleSendMessage}) => {
@@ -10,7 +11,7 @@ export const ChatInput = ({handleSendMessage}) => {
         setMessage(e.target.value)
     }
     const handleClick = () => {
-        !!message && handleSendMessage(message)
+        !!message && handleSendMessage(uuidv4(), message)
         setMessage('')
     }
 
@@ -27,7 +28,7 @@ export const ChatInput = ({handleSendMessage}) => {
                    ref={textareaRef}
                    onChange={handleOnChange}
             />
-            <button onClick={handleClick}><img className={styles.airplaneImg} src={airplaneSVG}></img></button> 
+            <button disabled={!message} onClick={handleClick}><img className={styles.airplaneImg} src={airplaneSVG}></img></button> 
         </div>
     )
 }

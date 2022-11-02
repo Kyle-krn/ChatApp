@@ -143,7 +143,8 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
         if 'type' not in data_json:
             return
         elif data_json['type'] == 'newMessage':
-            message = await self.create_message(data_json['message']) 
+            print(data_json)
+            message = await self.create_message(id=data_json['id'], message=data_json['message']) 
             await self.channel_layer.group_send(
                             self.room_group_name,
                             {
@@ -241,7 +242,7 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
         return self.room.get_online_count()
 
     @database_sync_to_async
-    def create_message(self, message):
-        return Message.objects.create(room=self.room, message=message, user=self.scope['user'])
+    def create_message(self, id, message):
+        return Message.objects.create(id=id, room=self.room, message=message, user=self.scope['user'])
         # return self.room.get_online_count()
     

@@ -4,14 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { setRooms, setError, appendRoom } from '../redux/chat/roomReducers';
+import { resetChatState } from '../redux/chat/chatReducers';
 
 
 export const RoomsPage = () => {
     const {isAuthenticated} = useSelector(state => state.authData.login)
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
-
     const { sendMessage, lastMessage, readyState } = useWebSocket("ws://localhost:8000/ws/rooms/", {
         shouldReconnect: (closeEvent) => true,
     });
@@ -49,6 +48,7 @@ export const RoomsPage = () => {
 
     useEffect(()=>{
         document.title = 'Rooms';
+        dispatch(resetChatState());
     },[])
 
     useEffect(()=>{

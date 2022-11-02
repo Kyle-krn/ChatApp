@@ -4,7 +4,7 @@ import { ChatHeader } from "../components/Chat/ChatHeader/ChatHeader";
 import { ChatInput } from "../components/Chat/ChatInput/ChatInput";
 import { ChatBody } from "../components/Chat/ChatBody/ChatBody";
 import useWebSocket, { ReadyState } from 'react-use-websocket';
-import { appendMessage, initChatData } from "../redux/chat/chatReducers";
+import { appendMessage, initChatData, appendSendMessage, setIsLoading, delFromSendMessage } from "../redux/chat/chatReducers";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -13,10 +13,7 @@ export const ChatPage = () => {
     const {id} = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {isAuthenticated, checkAuth} = useSelector(state => state.authData.login)
-    // const scrollDiv = useRef(null);
-    // const scrollDownRef = useRef(null);
-
+    const {isAuthenticated, checkAuth, userId} = useSelector(state => state.authData.login)
     useEffect(()=>{
         if (!isAuthenticated && checkAuth){
             navigate('/login')
@@ -28,10 +25,10 @@ export const ChatPage = () => {
     });
     
 
-
     useEffect(()=>{
         if (lastMessage !== null) {
             let data = JSON.parse(lastMessage.data)
+            // console.log(data)
             switch (data.type) {
                 case 'join_in_room':
                 case 'leave_in_room':
@@ -44,20 +41,42 @@ export const ChatPage = () => {
                     navigate('/')
                     break
                 case 'new_message':
-                    // const scrolldown = scrollDiv.current.scrollTop+793 === scrollDiv.current.scrollHeight
-                    // console.log("clientHeight>>",scrollDiv.current.scrollTop, " || ", scrollDiv.current.scrollTop+793)
-                    // console.log("scrollHeight>>",scrollDiv.current.scrollHeight)
-                    // console.log("scrollHeight===clientHeight>>",)
+                    dispatch(delFromSendMessage(data))
                     dispatch(appendMessage(data))
                     break
             }
         }
     }, [lastMessage])
 
-    const handleSendMessage = useCallback((message) => sendMessage(JSON.stringify({
-        "type": "newMessage",
-        message
-    })), []);
+    const connectionStatus = {
+        [ReadyState.CONNECTING]: 'Connecting',
+        [ReadyState.OPEN]: 'Open',
+        [ReadyState.CLOSING]: 'Closing',
+        [ReadyState.CLOSED]: 'Closed',
+        [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
+      }[readyState];
+
+    useEffect(()=>{
+        dispatch(setIsLoading(connectionStatus!=='Open'))
+    },[connectionStatus])
+
+    const handleSendMessage = useCallback((id, message) => {
+        sendMessage(JSON.stringify({
+            "type": "newMessage",
+            id,
+            message
+        }))
+        dispatch(appendSendMessage({ type:'sendMessage', 
+                               message: { 
+                                    id, 
+                                    message, 
+                                    user_id: userId,
+                                    created_at: new Date().valueOf() 
+                                }
+                            }))
+
+    }
+    , [userId]);
 
 
     return (

@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-)@+u5*1t4+^y(g&#^q&2*u^s2h&@0y!_)o@hd!snb43a=7m#p$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost"
+]
 
 
 # Application definition
@@ -49,6 +51,11 @@ INSTALLED_APPS = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
+    "https://b96d-178-155-4-226.ngrok.io"
+]
+
+CSRF_TRUSTED_ORIGINS=[
+    "https://b96d-178-155-4-226.ngrok.io"
 ]
 
 MIDDLEWARE = [
