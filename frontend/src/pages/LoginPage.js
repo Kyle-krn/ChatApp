@@ -2,6 +2,7 @@ import React, {useEffect} from "react";
 import { LoginForm } from "../components/LoginForm/LoginForm";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
+import Div100vh from 'react-div-100vh'
 
 
 export const LoginPage = () => {
@@ -17,8 +18,8 @@ export const LoginPage = () => {
     }, [isAuthenticated])
     
     return (
-        <div className="loginPage">
+        <Div100vh className="loginPage">
             <LoginForm />
-        </div>
+        </Div100vh>
     )
 }

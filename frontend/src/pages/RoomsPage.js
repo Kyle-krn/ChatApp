@@ -7,6 +7,7 @@ import { resetChatState } from '../redux/chat/chatReducers';
 import { LogoutComponent } from '../components/Logout/Logout';
 import { RoomModalWindow } from '../components/Room/RoomModalWindow/RoomModalWindow';
 import { wsTypes } from '../api/wsTypes';
+import Div100vh from 'react-div-100vh'
 
 export const RoomsPage = () => {
     const {isAuthenticated} = useSelector(state => state.authData.login)
@@ -61,9 +62,9 @@ export const RoomsPage = () => {
     }, [isAuthenticated])
     
     return (
-        <div className='roomPage'>
+        <Div100vh className='roomPage'>
             <LogoutComponent />
             <RoomModalWindow handleCreateRoom={handleCreateRoom}/>
-        </div>
+        </Div100vh>
     )
 }

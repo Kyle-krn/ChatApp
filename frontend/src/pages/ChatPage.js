@@ -15,6 +15,8 @@ import {
 } from "../redux/chat/chatReducers";
 import { useDispatch, useSelector } from "react-redux";
 import { wsTypes } from "../api/wsTypes";
+import Div100vh from 'react-div-100vh'
+
 
 export const ChatPage = () => {
     const { id } = useParams();
@@ -100,11 +102,11 @@ export const ChatPage = () => {
     }, [connectionStatus])
 
     return (
-        <div className="chatPage">
+        <Div100vh className="chatPage">
             <ChatHeader />
             <ChatBody handleGetOldMessage={handleGetOldMessage} />
             <ChatInput handleSendMessage={handleSendMessage} />
-        </div>
+        </Div100vh>
     )
 }
 
