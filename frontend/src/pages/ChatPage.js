@@ -4,7 +4,7 @@ import { ChatHeader } from "../components/Chat/ChatHeader/ChatHeader";
 import { ChatInput } from "../components/Chat/ChatInput/ChatInput";
 import { ChatBody } from "../components/Chat/ChatBody/ChatBody";
 import useWebSocket, { ReadyState } from 'react-use-websocket';
-import { appendMessage, initChatData, appendSendMessage, setIsLoading, delFromSendMessage } from "../redux/chat/chatReducers";
+import { appendMessage, initChatData, appendSendMessage, setIsLoading, delFromSendMessage, appendJoinOrLeaveMessagesArray, appendOldMessages } from "../redux/chat/chatReducers";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -13,7 +13,8 @@ export const ChatPage = () => {
     const {id} = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {isAuthenticated, checkAuth, userId} = useSelector(state => state.authData.login)
+    const {isAuthenticated, checkAuth, userId} = useSelector(state => state.authData.login);
+    const scrollDivRef = useRef();
     useEffect(()=>{
         if (!isAuthenticated && checkAuth){
             navigate('/login')
@@ -28,11 +29,10 @@ export const ChatPage = () => {
     useEffect(()=>{
         if (lastMessage !== null) {
             let data = JSON.parse(lastMessage.data)
-            // console.log(data)
             switch (data.type) {
                 case 'join_in_room':
                 case 'leave_in_room':
-                    dispatch(appendMessage(data))
+                    dispatch(appendJoinOrLeaveMessagesArray(data))
                     break;
                 case 'connected_to_chat':
                     dispatch(initChatData(data))
@@ -44,9 +44,13 @@ export const ChatPage = () => {
                     dispatch(delFromSendMessage(data))
                     dispatch(appendMessage(data))
                     break
+                case 'old_messages':
+                    dispatch(appendOldMessages(data))
+                    break
+                    
             }
         }
-    }, [lastMessage])
+    }, [lastMessage, scrollDivRef])
 
     const connectionStatus = {
         [ReadyState.CONNECTING]: 'Connecting',
@@ -59,7 +63,7 @@ export const ChatPage = () => {
     useEffect(()=>{
         dispatch(setIsLoading(connectionStatus!=='Open'))
     },[connectionStatus])
-
+    
     const handleSendMessage = useCallback((id, message) => {
         sendMessage(JSON.stringify({
             "type": "newMessage",
@@ -71,6 +75,7 @@ export const ChatPage = () => {
                                     id, 
                                     message, 
                                     user_id: userId,
+                                    username: '',
                                     created_at: new Date().valueOf() 
                                 }
                             }))
@@ -78,11 +83,19 @@ export const ChatPage = () => {
     }
     , [userId]);
 
+    const handleGetOldMessage = useCallback((lastCreatedAd)=>{
+        connectionStatus === 'Open' && 
+        
+        sendMessage(JSON.stringify({
+            "type": "getOldMessage",
+            lastCreatedAd
+        }))
+    }, [connectionStatus])
 
     return (
         <div className="chatPage">
             <ChatHeader />
-            <ChatBody/>
+            <ChatBody scrollDivRef={scrollDivRef} handleGetOldMessage={handleGetOldMessage}/>
             <ChatInput handleSendMessage={handleSendMessage}/>
         </div>
     )

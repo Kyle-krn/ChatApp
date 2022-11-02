@@ -6,7 +6,9 @@ const initialState = {
     usersOnlineCounter: 0,
     messagesArray: [],
     sendMessagesArray: [],
-    chatTitle: ''
+    joinOrLeaveMessagesArray:[],
+    chatTitle: '',
+    isHaveMessageUp: false
 }
 
 const chatRoomSlice = createSlice({
@@ -22,8 +24,10 @@ const chatRoomSlice = createSlice({
         initChatData(state, action) {
             state.chatTitle = action.payload.title_room
             state.usersOnlineCounter = action.payload.count_online
+            state.isHaveMessageUp = action.payload.is_have_message_up
+            // console.log(action.payload.is_have_message_up)
             if (state.messagesArray.length === 0) {
-                state.messagesArray = action.payload.messages
+                state.messagesArray = action.payload.messages.reverse()
             }
         },
         appendMessage(state, action){
@@ -36,6 +40,14 @@ const chatRoomSlice = createSlice({
             let index = state.sendMessagesArray.findIndex(el => el.message.id === action.payload.message.id)
             state.sendMessagesArray.splice(index, 1)
         },
+        appendJoinOrLeaveMessagesArray(state, action) {
+            state.joinOrLeaveMessagesArray.push(action.payload)
+        },
+        appendOldMessages(state, action){
+            // console.log(action.payload.messages)
+            state.messagesArray.unshift(...action.payload.messages.reverse())
+            state.isHaveMessageUp = action.payload.is_have_message_up
+        },
         resetChatState:  () => initialState
 
     }
@@ -43,4 +55,4 @@ const chatRoomSlice = createSlice({
 })
 
 export default chatRoomSlice.reducer;
-export const { setIsLoading ,setError ,initChatData ,appendMessage, resetChatState, appendSendMessage, delFromSendMessage } = chatRoomSlice.actions;
+export const { setIsLoading ,setError ,initChatData ,appendMessage, resetChatState, appendSendMessage, delFromSendMessage, appendJoinOrLeaveMessagesArray, appendOldMessages } = chatRoomSlice.actions;

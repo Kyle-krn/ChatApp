@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 import uuid
 from channels.generic.websocket import AsyncWebsocketConsumer
@@ -10,7 +11,6 @@ class RoomsConsumer(AsyncWebsocketConsumer):
         self.room_group_name = 'rooms'
 
         if isinstance(self.scope['user'], AnonymousUser):
-            print('jere')
             return await self.close()
         
         await self.channel_layer.group_add(
@@ -48,7 +48,6 @@ class RoomsConsumer(AsyncWebsocketConsumer):
                                         'created_at': str(created_rooms.created_at)
                                     }
                                 )
-
             except ValueError:
                 return await self.send(text_data=json.dumps(
                 {
@@ -73,7 +72,9 @@ class RoomsConsumer(AsyncWebsocketConsumer):
         
     @database_sync_to_async
     def get_rooms(self):
-        return [{'id': str(chat_room['id']), 'title': chat_room['title'], 'created_at': str(chat_room['created_at'])} for chat_room in ChatRoom.objects.values('id', 'title', 'created_at').order_by('-created_at')]
+        return [{'id': str(chat_room['id']), 
+                'title': chat_room['title'], 
+                'created_at': str(chat_room['created_at'])} for chat_room in ChatRoom.objects.values('id', 'title', 'created_at').order_by('-created_at')]
 
     @database_sync_to_async
     def create_rooms(self, title, creator):
@@ -115,13 +116,14 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
         await self.accept()
         
         count = await self.count_user_online()
-        
+        messages, is_have_message_up = await self.get_messages()
         await self.send(text_data=json.dumps(
             {
                 'type': 'connected_to_chat',
                 'count_online': count,
                 'title_room': self.room.title,
-                'messages': []
+                'messages': messages,
+                'is_have_message_up': is_have_message_up
             }
         )
         )
@@ -143,7 +145,6 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
         if 'type' not in data_json:
             return
         elif data_json['type'] == 'newMessage':
-            print(data_json)
             message = await self.create_message(id=data_json['id'], message=data_json['message']) 
             await self.channel_layer.group_send(
                             self.room_group_name,
@@ -156,6 +157,19 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
                                 'username': self.scope['user'].username
                             }
                         )
+        elif data_json['type'] == 'getOldMessage':
+            created_at_last_message = data_json['lastCreatedAd']
+            created_at_last_message = datetime.strptime(created_at_last_message, "%Y-%m-%d %H:%M:%S.%f")
+            print(created_at_last_message)
+            old_messages, is_have_message_up = await self.get_old_message(created_at_last_message)
+            await self.send(text_data=json.dumps(
+            {
+                'type': 'old_messages',
+                'messages': old_messages,
+                'is_have_message_up': is_have_message_up
+            }
+            )
+            )
         
 
 
@@ -188,6 +202,7 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
             {
                 'type': 'join_in_room',
                 'id': event['id'],
+                'created_at': str(datetime.utcnow()),
                 'user': {
                     'user_id': event['user_id'],
                     'username': event['username']
@@ -201,6 +216,7 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
             {
                 'type': 'leave_in_room',
                 'id': event['id'],
+                'created_at': str(datetime.utcnow()),
                 'user': {
                     'user_id': event['user_id'],
                     'username': event['username']
@@ -242,7 +258,34 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
         return self.room.get_online_count()
 
     @database_sync_to_async
-    def create_message(self, id, message):
+    def create_message(self, id: uuid.UUID, message: str):
         return Message.objects.create(id=id, room=self.room, message=message, user=self.scope['user'])
-        # return self.room.get_online_count()
     
+    @database_sync_to_async
+    def get_messages(self, offset: int = 0, limit: int = 50):
+        all_count_messages = Message.objects.filter(room=self.room).count()
+        all_count_messages > (offset+limit)
+        return [{
+                 'type': 'new_message',
+                 'message': {
+                    'id': str(i.id),
+                    'user_id': i.user.id,
+                    'message': i.message,
+                    'created_at': str(i.created_at)
+                 }
+                 
+                 } for i in Message.objects.filter(room=self.room).order_by('-created_at')[offset:limit]], all_count_messages > (offset+limit)
+    
+    @database_sync_to_async
+    def get_old_message(self, last_message_created_at):
+        all_count_messages = Message.objects.filter(room=self.room, created_at__lt=last_message_created_at).count()
+        return [{
+                 'type': 'new_message',
+                 'message': {
+                    'id': str(i.id),
+                    'user_id': i.user.id,
+                    'message': i.message,
+                    'created_at': str(i.created_at)
+                 }
+                 
+                 } for i in Message.objects.filter(room=self.room, created_at__lt=last_message_created_at).order_by('-created_at')[:50]], all_count_messages > 50
