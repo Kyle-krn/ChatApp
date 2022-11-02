@@ -1,6 +1,4 @@
 import React from "react";
-// import { CreateRoomForm } from "../Room/RoomCreate/CreateRoom";
-// import { RoomsList } from "../Room/RoomsList/ListRooms";
 import { CreateRoomForm } from "../RoomCreate/CreateRoom";
 import { RoomsList } from "../RoomsList/ListRooms";
 

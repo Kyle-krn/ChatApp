@@ -51,11 +51,9 @@ INSTALLED_APPS = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
-    "https://b96d-178-155-4-226.ngrok.io"
 ]
 
 CSRF_TRUSTED_ORIGINS=[
-    "https://b96d-178-155-4-226.ngrok.io"
 ]
 
 MIDDLEWARE = [
