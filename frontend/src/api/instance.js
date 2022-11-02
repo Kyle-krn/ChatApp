@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 
 
 export const axiosInstance = axios.create({
-    baseURL: process.env.HOST,
+    baseURL: process.env.API_URL,
 })
 
 axiosInstance.interceptors.request.use(async (config) => {
