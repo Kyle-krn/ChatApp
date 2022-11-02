@@ -14,7 +14,6 @@ export const ChatPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {isAuthenticated, checkAuth, userId} = useSelector(state => state.authData.login);
-    const scrollDivRef = useRef();
     useEffect(()=>{
         if (!isAuthenticated && checkAuth){
             navigate('/login')
@@ -50,7 +49,7 @@ export const ChatPage = () => {
                     
             }
         }
-    }, [lastMessage, scrollDivRef])
+    }, [lastMessage])
 
     const connectionStatus = {
         [ReadyState.CONNECTING]: 'Connecting',
@@ -95,7 +94,7 @@ export const ChatPage = () => {
     return (
         <div className="chatPage">
             <ChatHeader />
-            <ChatBody scrollDivRef={scrollDivRef} handleGetOldMessage={handleGetOldMessage}/>
+            <ChatBody handleGetOldMessage={handleGetOldMessage}/>
             <ChatInput handleSendMessage={handleSendMessage}/>
         </div>
     )
