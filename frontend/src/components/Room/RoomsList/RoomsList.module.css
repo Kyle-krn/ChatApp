@@ -1,0 +1,27 @@
+.roomList {
+    display: flex;
+    flex-direction: column;
+    padding: 30px 30px 0 30px;
+    row-gap: 10px;
+    max-height: 500px;
+    overflow-y: scroll;
+    
+}
+
+@media (max-height: 813px) {
+    .roomList {
+        max-height: 400px;
+    }
+}
+
+@media (max-height: 713px) {
+    .roomList {
+        max-height: 300px;
+    }
+}
+
+@media (max-height: 613px) {
+    .roomList {
+        max-height: 250px;
+    }
+}

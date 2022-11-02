@@ -4,7 +4,6 @@ import Cookies from 'js-cookie';
 
 export const axiosInstance = axios.create({
     baseURL: process.env.HOST,
-    // baseURL: 'https://b96d-178-155-4-226.ngrok.io',
 })
 
 axiosInstance.interceptors.request.use(async (config) => {

@@ -1,6 +1,6 @@
 import React from "react";
 import { CreateRoomForm } from "../RoomCreate/CreateRoom";
-import { RoomsList } from "../RoomsList/ListRooms";
+import { RoomsList } from "../RoomsList/RoomsList";
 
 export const RoomModalWindow = ({handleCreateRoom}) => {
     return (

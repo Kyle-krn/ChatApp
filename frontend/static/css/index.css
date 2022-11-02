@@ -36,6 +36,7 @@ a{color:black}
 
 body {
     font-family: "Open Sans";
+    height: 100%;
 }
 
 .loginPage {
@@ -163,33 +164,7 @@ div.inputWithBtn button{
 }
 
 
-.roomItem {
-    position: relative;
-    display: flex;
-    align-items: center;
-    background-color: #7879F1;
-    font-size: 14px;
-    padding: 15px;
-    border-radius: 5px;
-    text-align: left;
-    color: white;
-}
 
-.roomItem img {
-    position: absolute;
-    right: 22px;
-}
-
-.roomList {
-    display: flex;
-    flex-direction: column;
-    padding: 30px 30px 0 30px;
-    row-gap: 10px;
-    max-height: 500px;
-    /* overflow: auto; */
-    overflow-y: scroll;
-    
-}
 
 
 .scroll::-webkit-scrollbar {

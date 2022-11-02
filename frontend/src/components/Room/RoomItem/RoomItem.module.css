@@ -1,0 +1,17 @@
+
+.roomItem {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: #7879F1;
+    font-size: 14px;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: left;
+    color: white;
+}
+
+.roomItem img {
+    position: absolute;
+    right: 22px;
+}
