@@ -3,11 +3,39 @@
 from django.contrib.auth import get_user_model
 import sys
 
-# see ref. below
 UserModel = get_user_model()
 
-if not UserModel.objects.filter(username='foo').exists():
-    user=UserModel.objects.create_user('foo', password='bar')
-    user.is_superuser=True
-    user.is_staff=True
-    user.save()
+users_data = [
+    {
+        'username': 'jhon',
+        'password': 'pass123'
+    },
+    {
+        'username': 'leon',
+        'password': 'pass123'
+    },
+    {
+        'username': 'baker',
+        'password': 'pass123'
+    },
+    {
+        'username': 'lilia',
+        'password': 'pass123'
+    },
+    {
+        'username': 'aizek',
+        'password': 'pass123'
+    },
+    {
+        'username': 'mila',
+        'password': 'pass123'
+    },
+    {
+        'username': 'sins',
+        'password': 'pass123'
+    },
+]
+
+for user_data in users_data:
+    if not UserModel.objects.filter(username=user_data['username']).exists():
+        UserModel.objects.create_user(user_data['username'], password=user_data['password'])
