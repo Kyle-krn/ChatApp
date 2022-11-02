@@ -27,7 +27,7 @@ export const ChatPage = () => {
         }
     }, [isAuthenticated, checkAuth])
 
-    const { sendMessage, lastMessage, readyState } = useWebSocket(`${process.env.WS}/ws/room/` + id + '/', {
+    const { sendMessage, lastMessage, readyState } = useWebSocket(`${process.env.WS_URL}/ws/room/` + id + '/', {
         shouldReconnect: (closeEvent) => true,
     });
 
