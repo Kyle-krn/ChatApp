@@ -4,7 +4,6 @@ import Moment from 'react-moment';
 
 
 export const DateItem = ({date}) => {
-    console.log(date)
     const userDate = new Date(date).valueOf() - ((new Date).getTimezoneOffset() * 60000)
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
     return (

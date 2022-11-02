@@ -25,7 +25,6 @@ const chatRoomSlice = createSlice({
             state.chatTitle = action.payload.title_room
             state.usersOnlineCounter = action.payload.count_online
             state.isHaveMessageUp = action.payload.is_have_message_up
-            // console.log(action.payload.is_have_message_up)
             if (state.messagesArray.length === 0) {
                 state.messagesArray = action.payload.messages.reverse()
             }

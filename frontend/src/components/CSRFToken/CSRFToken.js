@@ -1,7 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { axiosInstance } from '../../api/instance';
 import api from './../../api/index';
-import axios from 'axios';
 
 const CSRFToken = () => {
     const [csrftoken, setCsrftoken] = useState('');
