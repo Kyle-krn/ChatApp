@@ -1,11 +1,11 @@
 import React, {useEffect, useCallback} from 'react';
-import { RoomForm } from '../components/RoomForm/RoomForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
-import { setRooms, setError, appendRoom } from '../redux/chat/roomReducers';
+import { setRooms, setError, appendRoom, setLoading } from '../redux/chat/roomReducers';
 import { resetChatState } from '../redux/chat/chatReducers';
 import { LogoutComponent } from '../components/Logout/Logout';
+import { RoomModalWindow } from '../components/Room/RoomModalWindow/RoomModalWindow';
 
 export const RoomsPage = () => {
     const {isAuthenticated} = useSelector(state => state.authData.login)
@@ -22,6 +22,10 @@ export const RoomsPage = () => {
         [ReadyState.CLOSED]: 'Closed',
         [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
       }[readyState];
+
+    useEffect(()=>{
+        dispatch(setLoading(connectionStatus !== 'Open'))
+    }, [readyState])
     
     useEffect(()=>{
         if (lastMessage !== null) {
@@ -58,7 +62,7 @@ export const RoomsPage = () => {
     return (
         <div className='roomPage'>
             <LogoutComponent />
-            <RoomForm connectionStatus={connectionStatus} handleCreateRoom={handleCreateRoom}/>
+            <RoomModalWindow handleCreateRoom={handleCreateRoom}/>
         </div>
     )
 }

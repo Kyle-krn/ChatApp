@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import CSRFToken from "../CSRFToken/CSRFToken";
 import { APILogin } from "../../redux/auth/loginReducer";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +11,7 @@ export const LoginForm = () => {
         username: '',
         password: '',
     });
-    const {isLoading, error, roomsArray} = useSelector(state => state.authData.login)
+    const {isLoading, error} = useSelector(state => state.authData.login)
     const dispatch = useDispatch();
 
     const hadnleOnChange = e => {

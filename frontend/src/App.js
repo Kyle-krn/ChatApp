@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import {
   BrowserRouter,
   Routes,
@@ -12,6 +12,7 @@ import { APICheckAuth } from "./redux/auth/loginReducer";
 import { useDispatch } from "react-redux";
 import { RoomsPage } from "./pages/RoomsPage";
 import { ChatPage } from "./pages/ChatPage";
+
 
 const Layout = ({children}) => {
   const dispatch = useDispatch();
