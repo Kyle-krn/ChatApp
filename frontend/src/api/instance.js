@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 
 
 export const axiosInstance = axios.create({
-    // baseURL: 'http://localhost:8000',
+    baseURL: process.env.HOST,
     // baseURL: 'https://b96d-178-155-4-226.ngrok.io',
 })
 

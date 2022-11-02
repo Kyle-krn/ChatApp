@@ -12,7 +12,7 @@ export const RoomsPage = () => {
     const {isAuthenticated} = useSelector(state => state.authData.login)
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { sendMessage, lastMessage, readyState } = useWebSocket("ws://localhost:8000/ws/rooms/", {
+    const { sendMessage, lastMessage, readyState } = useWebSocket(`${process.env.WS}/ws/rooms/`, {
         shouldReconnect: (closeEvent) => true,
     });
 

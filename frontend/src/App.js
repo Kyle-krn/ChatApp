@@ -4,12 +4,12 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
-import { LoginPage } from "./pages/LoginPage";
-import { Provider } from "react-redux";
+import { Provider,useDispatch } from "react-redux";
 import store from "./redux/store";
 import { useEffect } from "react";
 import { APICheckAuth } from "./redux/auth/loginReducer";
-import { useDispatch } from "react-redux";
+
+import { LoginPage } from "./pages/LoginPage";
 import { RoomsPage } from "./pages/RoomsPage";
 import { ChatPage } from "./pages/ChatPage";
 
