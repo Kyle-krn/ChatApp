@@ -12,8 +12,8 @@ const roomSlice = createSlice({
         setError(state, action) {
             state.error = action.payload
         },
-        unsetLoading(state) {
-            state.isLoading = false
+        setLoading(state, action) {
+            state.isLoading = action.payload
         },
         setRooms(state, action) {
             state.roomsArray = action.payload
@@ -26,4 +26,4 @@ const roomSlice = createSlice({
 })
 
 export default roomSlice.reducer;
-export const { setError, unsetLoading, setRooms, appendRoom } = roomSlice.actions;
+export const { setError, setLoading, setRooms, appendRoom } = roomSlice.actions;
