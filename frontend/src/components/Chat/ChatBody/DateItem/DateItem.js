@@ -1,12 +1,15 @@
 import React from "react";
 import styles from './DateItem.module.css';
+import Moment from 'react-moment';
+
 
 export const DateItem = ({date}) => {
+    console.log(date)
     const userDate = new Date(date).valueOf() - ((new Date).getTimezoneOffset() * 60000)
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
     return (
         <div className={styles.dateItem}>
-            {new Date(userDate).toLocaleString("ru-RU", {dateStyle: "full"})}
-            
+            <Moment date={userDate} format="DD.MM.YYYY"/>
         </div>
     )
 }
