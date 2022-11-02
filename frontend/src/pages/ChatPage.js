@@ -31,7 +31,7 @@ export const ChatPage = () => {
             switch (data.type) {
                 case 'join_in_room':
                 case 'leave_in_room':
-                    dispatch(appendJoinOrLeaveMessagesArray(data))
+                    data.user.user_id !== userId && dispatch(appendJoinOrLeaveMessagesArray(data))
                     break;
                 case 'connected_to_chat':
                     dispatch(initChatData(data))

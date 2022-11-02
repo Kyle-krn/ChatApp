@@ -42,9 +42,13 @@ const chatRoomSlice = createSlice({
         },
         appendJoinOrLeaveMessagesArray(state, action) {
             state.joinOrLeaveMessagesArray.push(action.payload)
+            if (action.payload.type === 'join_in_room') {
+                state.usersOnlineCounter++
+            } else {
+                state.usersOnlineCounter--
+            }
         },
         appendOldMessages(state, action){
-            // console.log(action.payload.messages)
             state.messagesArray.unshift(...action.payload.messages.reverse())
             state.isHaveMessageUp = action.payload.is_have_message_up
         },

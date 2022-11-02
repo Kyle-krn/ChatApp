@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../../api";
 
+
 export const APILogin = createAsyncThunk(
     'auth/APILogin',
     async function ({username, password}, {rejectWithValue, dispatch}) {
@@ -17,6 +18,18 @@ export const APILogin = createAsyncThunk(
     }
 )
 
+export const APILogout = createAsyncThunk(
+    'auth/APILogout', 
+    async function(_,{rejectWithValue, dispatch}) {
+        try {
+            await api.auth.logout()
+            dispatch(resetLoginState())
+        } catch (error) {
+            return rejectWithValue()
+        }
+    }
+)
+
 export const APICheckAuth = createAsyncThunk(
     'auth/APICheckAuth',
     async function(_, {rejectWithValue, dispatch}){
@@ -29,15 +42,17 @@ export const APICheckAuth = createAsyncThunk(
     }
 )
 
+const initialState = {
+    isAuthenticated: false,
+    isLoading: false,
+    error: null,
+    userId: null,
+    checkAuth: false,
+}
+
 const loginSlice = createSlice({
     name: "login",
-    initialState: {
-        isAuthenticated: false,
-        isLoading: false,
-        error: null,
-        userId: null,
-        checkAuth: false,
-    },
+    initialState: initialState,
     reducers: {
         loginUser(state, action) {
             state.isLoading = false
@@ -53,7 +68,8 @@ const loginSlice = createSlice({
         },
         unsetError(state) {
             state.error = null
-        }
+        },
+        resetLoginState: () => initialState
     },
     extraReducers: {
         [APILogin.pending]: (state) => {
@@ -72,4 +88,4 @@ const loginSlice = createSlice({
 })
 
 export default loginSlice.reducer;
-export const { loginUser, logoutUser, unsetError } = loginSlice.actions;
+export const { loginUser, logoutUser, unsetError, resetLoginState } = loginSlice.actions;

@@ -38,7 +38,6 @@ export const RoomForm = ({connectionStatus, handleCreateRoom}) => {
                            value={title}
                            onChange={handleOnChange}
                     />
-                    {/* <button className="btn">Создать</button> */}
                     {connectionStatus!=='Open'?<LoadingButton />:<button className={!!title? "btn":"btn disableButton"}  
                         disabled={!title}>Создать</button>}
                 </div>

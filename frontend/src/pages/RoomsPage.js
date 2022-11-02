@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { setRooms, setError, appendRoom } from '../redux/chat/roomReducers';
 import { resetChatState } from '../redux/chat/chatReducers';
-
+import { LogoutComponent } from '../components/Logout/Logout';
 
 export const RoomsPage = () => {
     const {isAuthenticated} = useSelector(state => state.authData.login)
@@ -57,6 +57,7 @@ export const RoomsPage = () => {
     
     return (
         <div className='roomPage'>
+            <LogoutComponent />
             <RoomForm connectionStatus={connectionStatus} handleCreateRoom={handleCreateRoom}/>
         </div>
     )

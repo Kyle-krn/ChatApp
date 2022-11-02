@@ -24,7 +24,7 @@ export const ChatBody = ({handleGetOldMessage}) => {
     const scrollDivRef = useRef(null);
     
     
-    const TestRef = useRef(null);
+    const prevTopMessageIdRef = useRef(null);
     
     const scrollDownRef = useRef(null);
 
@@ -33,21 +33,22 @@ export const ChatBody = ({handleGetOldMessage}) => {
 
     useEffect(()=>{
         let offsetScroll = 0;
-        if (!!prevTopMessageId && (prevTopMessageId!==TestRef.current) ){
+        if (!!prevTopMessageId && (prevTopMessageId!==prevTopMessageIdRef.current) ){
 
             for (let i = 0; i < scrollDivRef.current.children.length; i++) { // используем существующую переменную
-                offsetScroll += (scrollDivRef.current.children[i].clientHeight + 16)
                 if (scrollDivRef.current.children[i].getAttribute('message_id') === prevTopMessageId) {
                     break
                 }
+                offsetScroll += (scrollDivRef.current.children[i].clientHeight + 16)
+                
               }
         }
         if (offsetScroll > 0) {
-            scrollDivRef.current.scrollTop = offsetScroll          
+            scrollDivRef.current.scrollTop = offsetScroll + 16          
         }
 
-        isAutoScroll && scrollDownRef.current?.scrollIntoView({behavior: 'smooth'})
-    },[messages, TestRef])
+        isAutoScroll && scrollDownRef.current?.scrollIntoView() //{behavior: 'smooth'}
+    },[messages, prevTopMessageIdRef])
 
 
     useEffect(()=>{
@@ -63,9 +64,9 @@ export const ChatBody = ({handleGetOldMessage}) => {
 
         }) 
         setMessages(messagesRaw)
-        setPrevTopMessageId(TestRef.current)
+        setPrevTopMessageId(prevTopMessageIdRef.current)
         if ( !!messagesRaw[0]) {
-            TestRef.current = SeparateMessageAction(messagesRaw[0], 'id')
+            prevTopMessageIdRef.current = SeparateMessageAction(messagesRaw[0], 'id')
         }
 
     },[messagesArray, sendMessagesArray, joinOrLeaveMessagesArray, setMessages, setPrevTopMessageId])

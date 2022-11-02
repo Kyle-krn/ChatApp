@@ -67,6 +67,13 @@ body {
     height: 100vh;
 }
 
+@media (max-width: 900px) {
+    .chatPage {
+        max-width: 696px;
+    }
+}
+
+
 .form {
     position: absolute;
     left: 50%;
@@ -215,19 +222,4 @@ div.inputWithBtn button{
     position: relative;
     top: -32px;
     left: 23px;
-  }
-
-
-
-
-
-  textarea {
-    width: 100%;
-    border: 1px solid #E5E5E5;
-    border-radius: 5px;
-    font-size: 14px;
-    padding: 15px;
-    resize: none;
-    transition: border 500ms linear;
-    height: 48px;
   }
