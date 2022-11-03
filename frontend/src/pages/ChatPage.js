@@ -15,14 +15,19 @@ import {
 } from "../redux/chat/chatReducers";
 import { useDispatch, useSelector } from "react-redux";
 import { wsTypes } from "../api/wsTypes";
-import Div100vh from 'react-div-100vh'
-
+import Div100vh from 'react-div-100vh';
+import useSound from 'use-sound';
+import soundNotificationMessage from './../../static/sound/notification_message.mp3';
 
 export const ChatPage = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { isAuthenticated, checkAuth, userId } = useSelector(state => state.authData.login);
+    const {isNotificationMessage} = useSelector(state => state.authData.profile)
+
+    const [playNotification] = useSound(soundNotificationMessage);
+
     useEffect(() => {
         if (!isAuthenticated && checkAuth) {
             navigate('/login')
@@ -49,6 +54,7 @@ export const ChatPage = () => {
                     navigate('/')
                     break
                 case wsTypes.CHAT.GET.NEW_MESSAGE:
+                    (data.message.user_id !== userId && isNotificationMessage )&& playNotification()
                     dispatch(delFromSendMessage(data))
                     dispatch(appendMessage(data))
                     break

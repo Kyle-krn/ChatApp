@@ -3,7 +3,7 @@ import styles from './ChatHeader.module.css'
 import { LogoutComponent } from "../../Logout/Logout";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-
+import { NotificationComponent } from "../Notification/Notification";
 
 export const ChatHeader = () => {
     const {chatTitle, usersOnlineCounter, isLoading} = useSelector(state => state.chat.chat)
@@ -15,6 +15,7 @@ export const ChatHeader = () => {
     
     return (
         <header className={styles.chatPage_header}>
+            <NotificationComponent />
             <div className={styles.header_text}>
                 <span>{chatTitle}</span>
                 

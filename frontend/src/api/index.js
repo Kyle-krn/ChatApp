@@ -1,9 +1,9 @@
 import * as auth from './auth';
-import * as chat from './chat'
+import * as profile from './profile';
 
 const api = {
     auth,
-    chat
+    profile
 }
 
 

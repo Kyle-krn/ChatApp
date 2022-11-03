@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../../api";
-
+import { APIGetProfile } from "./profileReducer";
 
 export const APILogin = createAsyncThunk(
     'auth/APILogin',
@@ -8,6 +8,7 @@ export const APILogin = createAsyncThunk(
         try {
             const res = await api.auth.login({username, password})
             dispatch(loginUser(res.data.user_id))
+            dispatch(APIGetProfile())
         } catch (error) {
             if (error.response.status === 400) {
                 return rejectWithValue("Неверный логин или пароль")
@@ -36,6 +37,7 @@ export const APICheckAuth = createAsyncThunk(
         try {
             const res = await api.auth.checkAuthenticated();
             dispatch(loginUser(res.data.user_id))
+            dispatch(APIGetProfile())
         } catch (error) {
             return rejectWithValue()
         }

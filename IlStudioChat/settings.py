@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'channels',
     'auth_app',
     'chat_app',
+    'profile_app',
     'frontend',
     
 ]
