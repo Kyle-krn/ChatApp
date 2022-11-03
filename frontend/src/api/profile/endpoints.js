@@ -1,7 +1,7 @@
 const Endpoints = {
     PROFILE: {
-        GET_PROFILE: '/profile/profile/',
-        TOGGLE_NOTIFICATION: '/profile/profile/toggleNotification/',
+        GET_PROFILE: '/api/profile/profile/',
+        TOGGLE_NOTIFICATION: '/api/profile/profile/toggleNotification/',
     }
 };
 

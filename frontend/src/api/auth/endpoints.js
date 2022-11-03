@@ -1,9 +1,9 @@
 const Endpoints = {
     AUTH: {
-        LOGIN: '/auth/login',
-        LOGOUT: '/auth/logout',
-        CSRF_TOKEN: '/auth/csrf_cookie',
-        CHECK_AUTH: '/auth/check_authenticated'
+        LOGIN: '/api/auth/login',
+        LOGOUT: '/api/auth/logout',
+        CSRF_TOKEN: '/api/auth/csrf_cookie',
+        CHECK_AUTH: '/api/auth/check_authenticated'
     }
 };
 
