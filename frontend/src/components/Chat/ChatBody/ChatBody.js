@@ -96,8 +96,10 @@ export const ChatBody = ({handleGetOldMessage}) => {
                     if (messages[index-1].type === 'new_message') {    
                         isMyMessageUp = messages[index-1].message.user_id === userId
                     }
-                    let currentMessageDay = new Date(SeparateMessageAction(el, 'created_at').replace(' ', 'T')).getDate()
-                    let prevMessageDay = new Date(SeparateMessageAction(messages[index-1], 'created_at').replace(' ', 'T')).getDate()
+                    let currentMessageDay = SeparateMessageAction(el, 'created_at')
+                    currentMessageDay = new Date(currentMessageDay.replace(' ', 'T')).getDate()
+                    let prevMessageDay = SeparateMessageAction(messages[index-1], 'created_at')
+                    prevMessageDay = new Date(prevMessageDay.replace(' ', 'T')).getDate()
                     if (currentMessageDay !== prevMessageDay) {
                         renderDateItem = true
                     }
