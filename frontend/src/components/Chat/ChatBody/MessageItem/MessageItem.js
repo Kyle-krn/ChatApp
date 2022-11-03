@@ -6,7 +6,7 @@ import otherBubblSVG from './../../../../../static/img/otherBubbletip.png'
 import Moment from 'react-moment';
 
 export const MessageItem = React.memo(({myMess,id, username, message, created_at, isMyMessageUp, type}) => {
-    const userTime = new Date(created_at).valueOf() - ((new Date).getTimezoneOffset() * 60000)
+    const userTime = new Date(created_at.replace(' ', 'T')).valueOf() - ((new Date).getTimezoneOffset() * 60000)
     return (
         <div message_id={id} className={`${styles.messageItem} ${myMess? styles.myMessage: styles.otherMessage}`}>
             <span className={styles.username}>{username}</span>

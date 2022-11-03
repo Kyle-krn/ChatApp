@@ -86,17 +86,18 @@ export const ChatBody = ({handleGetOldMessage}) => {
 
     return (
         <div ref={scrollDivRef} onScroll={ScrollHandler} className={styles.chatBody + " scroll"}>
-            {(!isHaveMessageUp && !!messages[0]) && <DateItem key={"dfefve"} date={SeparateMessageAction(messages[0], 'created_at')}/>}
+            {(!isHaveMessageUp && !!messages[0]) && <DateItem key={"dfefve"} date={SeparateMessageAction(messages[0], 'created_at').replace(' ', 'T')}/>}
             {messages.map( ( el, index )=>{
                 
                 let isMyMessageUp = false;
                 let renderDateItem = false;
+
                 if (index > 1) {
                     if (messages[index-1].type === 'new_message') {    
                         isMyMessageUp = messages[index-1].message.user_id === userId
                     }
-                    let currentMessageDay = new Date(SeparateMessageAction(el, 'created_at')).getDate()
-                    let prevMessageDay = new Date(SeparateMessageAction(messages[index-1], 'created_at')).getDate()
+                    let currentMessageDay = new Date(SeparateMessageAction(el, 'created_at').replace(' ', 'T')).getDate()
+                    let prevMessageDay = new Date(SeparateMessageAction(messages[index-1], 'created_at').replace(' ', 'T')).getDate()
                     if (currentMessageDay !== prevMessageDay) {
                         renderDateItem = true
                     }
