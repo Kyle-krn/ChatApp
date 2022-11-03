@@ -13,7 +13,7 @@ export const MessageItem = React.memo(({myMess,id, username, message, created_at
             <span className={styles.messageText}>{message}</span>
             <div className={styles.messageStatus}>
                 <span className={styles.messageTime}>
-                    <Moment date={userTime} format="h:m"/>
+                    <Moment date={userTime} format="h:mm"/>
                 </span>
                 <span className={styles.messageCheck}> 
                     <img src={checkSVG} loading="lazy"></img> 
