@@ -7,6 +7,7 @@ export const APILogin = createAsyncThunk(
     async function ({username, password}, {rejectWithValue, dispatch}) {
         try {
             const res = await api.auth.login({username, password})
+            
             dispatch(loginUser(res.data.user_id))
             dispatch(APIGetProfile())
         } catch (error) {
@@ -36,6 +37,7 @@ export const APICheckAuth = createAsyncThunk(
     async function(_, {rejectWithValue, dispatch}){
         try {
             const res = await api.auth.checkAuthenticated();
+            console.log(res)
             dispatch(loginUser(res.data.user_id))
             dispatch(APIGetProfile())
         } catch (error) {
