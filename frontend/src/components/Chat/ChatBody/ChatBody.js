@@ -107,7 +107,9 @@ export const ChatBody = ({handleGetOldMessage}) => {
                     return <UserJoinItem key={el.id} id={el.id} username={el.user.username} type={el.type}/>
                 } else if (el.type === 'new_message' || el.type === 'message' || el.type === 'sendMessage') { 
                     return (
+                    
                     <Fragment key={el.message.id + "_fragment"}>
+                        {console.log(el.message)}
                         {renderDateItem && <DateItem key={el.message.id + "_date"} date={SeparateMessageAction(el, 'created_at')}/>}
                         <MessageItem key={el.message.id}
                                     id={el.message.id}

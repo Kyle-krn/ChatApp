@@ -271,7 +271,8 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
                     'id': str(i.id),
                     'user_id': i.user.id,
                     'message': i.message,
-                    'created_at': str(i.created_at)
+                    'created_at': str(i.created_at),
+                    'username': i.user.username
                  }
                  
                  } for i in Message.objects.filter(room=self.room).order_by('-created_at')[offset:limit]], all_count_messages > (offset+limit)
@@ -285,7 +286,8 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
                     'id': str(i.id),
                     'user_id': i.user.id,
                     'message': i.message,
-                    'created_at': str(i.created_at)
+                    'created_at': str(i.created_at),
+                    'username': i.user.username
                  }
                  
                  } for i in Message.objects.filter(room=self.room, created_at__lt=last_message_created_at).order_by('-created_at')[:50]], all_count_messages > 50
