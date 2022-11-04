@@ -77,14 +77,12 @@ export const ChatPage = () => {
     useEffect(() => {
         dispatch(setIsLoading(connectionStatus !== 'Open'))
     }, [connectionStatus])
-
     const handleSendMessage = useCallback((id, message) => {
         sendMessage(JSON.stringify({
             "type": wsTypes.CHAT.POST.NEW_MESSAGE,
             id,
             message
         }))
-        var d = new Date();
         dispatch(appendSendMessage({
             type: 'sendMessage',
             message: {
@@ -92,7 +90,7 @@ export const ChatPage = () => {
                 message,
                 user_id: userId,
                 username: '',
-                created_at: `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}.${d.getMilliseconds()}`, 
+                created_at: new Date().toISOString(), 
 
             }
         }))

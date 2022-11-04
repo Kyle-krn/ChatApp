@@ -45,7 +45,7 @@ class RoomsConsumer(AsyncWebsocketConsumer):
                                         'type': 'send_created_room',
                                         'id': str(created_rooms.id),
                                         'title': created_rooms.title,
-                                        'created_at': str(created_rooms.created_at)
+                                        'created_at': created_rooms.created_at.isoformat()
                                     }
                                 )
             except ValueError:
@@ -74,7 +74,7 @@ class RoomsConsumer(AsyncWebsocketConsumer):
     def get_rooms(self):
         return [{'id': str(chat_room['id']), 
                 'title': chat_room['title'], 
-                'created_at': str(chat_room['created_at'])} for chat_room in ChatRoom.objects.values('id', 'title', 'created_at').order_by('-created_at')]
+                'created_at': chat_room['created_at'].isoformat()} for chat_room in ChatRoom.objects.values('id', 'title', 'created_at').order_by('-created_at')]
 
     @database_sync_to_async
     def create_rooms(self, title, creator):
@@ -152,7 +152,7 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
                                 'type': 'new_message',
                                 'id': str(message.id),
                                 'message': message.message,
-                                'created_at': str(message.created_at),
+                                'created_at': message.created_at.isoformat(),
                                 'user_id': message.user_id,
                                 'username': self.scope['user'].username
                             }
@@ -202,7 +202,7 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
             {
                 'type': 'join_in_room',
                 'id': event['id'],
-                'created_at': str(datetime.utcnow()),
+                'created_at': datetime.utcnow().isoformat(),
                 'user': {
                     'user_id': event['user_id'],
                     'username': event['username']
@@ -216,7 +216,7 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
             {
                 'type': 'leave_in_room',
                 'id': event['id'],
-                'created_at': str(datetime.utcnow()),
+                'created_at': datetime.utcnow().isoformat(),
                 'user': {
                     'user_id': event['user_id'],
                     'username': event['username']
@@ -271,7 +271,7 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
                     'id': str(i.id),
                     'user_id': i.user.id,
                     'message': i.message,
-                    'created_at': str(i.created_at),
+                    'created_at': i.created_at.isoformat(),
                     'username': i.user.username
                  }
                  
@@ -286,7 +286,7 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
                     'id': str(i.id),
                     'user_id': i.user.id,
                     'message': i.message,
-                    'created_at': str(i.created_at),
+                    'created_at': i.created_at.isoformat(),
                     'username': i.user.username
                  }
                  
