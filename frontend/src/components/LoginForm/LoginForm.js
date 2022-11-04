@@ -33,7 +33,7 @@ export const LoginForm = () => {
 
     return (
         <div className="form loginForm">
-            <span>Авторизация</span>
+            <span className="form_title">Авторизация</span>
             <form onSubmit={handleSubmitForm}>
                 <CSRFToken />
                 <input placeholder={error? error:"Логин"}  

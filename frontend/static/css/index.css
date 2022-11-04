@@ -105,7 +105,7 @@ body {
 
 
 
-.form span {
+.form .form_title {
     display: block;
     font-weight: 400;
     font-size: 26px;

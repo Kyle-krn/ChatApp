@@ -7,7 +7,7 @@ import { NotificationComponent } from "../Notification/Notification";
 import styled , {keyframes} from 'styled-components';
 
 
-const moveVertically = (startPos, endPos) => keyframes`
+const moveHoriozntale = (startPos, endPos) => keyframes`
     0% { left: ${startPos}px; }
     100% { left: ${endPos}px; }
 `;
@@ -18,11 +18,9 @@ const TitleTextStyled = styled.span`
     margin-bottom: 8px;
     font-size: 18px;
     position: relative;
-    animation: ${props => moveVertically(props.animationPos.startPos, props.animationPos.endPos)} 10s infinite linear;
+    animation: ${props => moveHoriozntale(props.animationPos.startPos, props.animationPos.endPos)} 10s infinite linear;
     
 `
-
-// 
 
 export const ChatHeader = () => {
     const titleRef = useRef(null);
@@ -38,7 +36,7 @@ export const ChatHeader = () => {
         if (!!chatTitle) { 
             document.title = chatTitle
             if (titleRef.current.offsetWidth > wrapperRef.current.offsetWidth) {
-                setAnimationPos({startPos: 300, endPos: -titleRef.current.offsetWidth})
+                setAnimationPos({startPos: wrapperRef.current.offsetWidth, endPos: -titleRef.current.offsetWidth})
             }
         }
     }, [chatTitle]);

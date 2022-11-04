@@ -7,7 +7,9 @@ export const RoomItem = ({id, title}) => {
     return (
         <NavLink to={`/room/${id}`}>
             <div className={styles.roomItem}>
-                {title}
+                <div className={styles.roomTitleWrapper}>
+                    <span className={styles.roomTitle}>{title}</span>
+                </div> 
                 <img src={arrowSVG}/>
             </div>
         </NavLink>

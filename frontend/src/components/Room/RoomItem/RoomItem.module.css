@@ -11,6 +11,12 @@
     color: white;
 }
 
+.roomItem .roomTitleWrapper {
+    max-width: 400px;
+    overflow: hidden;
+}
+
+
 .roomItem img {
     position: absolute;
     right: 22px;
