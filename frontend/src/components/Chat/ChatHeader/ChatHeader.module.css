@@ -15,16 +15,45 @@
     align-items: center;
 }
 
-.chatPage_header .header_text span:nth-child(1){
+.chatPage_header .header__title{
     color: #2C2C2E;
     font-weight: 600;
     margin-bottom: 8px;
     font-size: 18px;
-    
+    position: relative;
 }
 
-.chatPage_header .header_text span:nth-child(2){
+.chatPage_header .header__title__wraper {
+    max-width: 300px;
+    margin-bottom: 8px;
+    overflow: hidden;
+}
+
+@media (max-width:450px) {
+    .chatPage_header .header__title__wraper {
+        max-width: 250px;
+    }
+}
+
+@media (max-width:390px) {
+    .chatPage_header .header__title__wraper {
+        max-width: 200px;
+    }
+}
+
+@media (max-width:350px) {
+    .chatPage_header .header__title__wraper {
+        max-width: 150px;
+    }
+}
+
+.chatPage_header .header__connect_info{
     color: #666668;
     font-size: 12px;
 }
 
+
+@keyframes text-line {
+    0% { left: 300px; }
+    100% { left: -566px; }
+  }
